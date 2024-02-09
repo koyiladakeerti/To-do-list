@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+             background-image: url("https://t3.ftcdn.net/jpg/05/13/59/72/360_F_513597277_YYqrogAmgRR9ohwTUnOM784zS9eYUcSk.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            margin: 50px;
+        }
+
+        #taskInput {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+        }
+
+        #addTaskBtn {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #taskList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .taskItem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            padding: 10px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .deleteBtn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+     <small style="font-size:100%;color:yellow">Developed by @<a href="#">
+                 koyilada keerti.</a>
+    <h1 style="color:navy;">To-Do List App</h1>
+    <input type="text" id="taskInput" placeholder="Enter a task">
+    <button id="addTaskBtn">Add Task</button>
+    <ul id="taskList"></ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const taskInput = document.getElementById('taskInput');
+            const addTaskBtn = document.getElementById('addTaskBtn');
+            const taskList = document.getElementById('taskList');
+
+            addTaskBtn.addEventListener('click', function () {
+                const taskText = taskInput.value.trim();
+
+                if (taskText !== '') {
+                    addTask(taskText);
+                    taskInput.value = '';
+                }
+            });
+
+            function addTask(taskText) {
+                const li = document.createElement('li');
+                li.className = 'taskItem';
+
+                const taskTextSpan = document.createElement('span');
+                taskTextSpan.innerText = taskText;
+
+                const editBtn = document.createElement('button');
+                editBtn.innerText = 'Edit';
+                editBtn.addEventListener('click', function () {
+                    const newTaskText = prompt('Edit task:', taskText);
+                    if (newTaskText !== null) {
+                        taskTextSpan.innerText = newTaskText.trim();
+                    }
+                });
+
+                const completeBtn = document.createElement('button');
+                completeBtn.innerText = 'Complete';
+                completeBtn.addEventListener('click', function () {
+                    li.classList.toggle('completed');
+                });
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'deleteBtn';
+                deleteBtn.innerText = 'Delete';
+                deleteBtn.addEventListener('click', function () {
+                    taskList.removeChild(li);
+                });
+
+                li.appendChild(taskTextSpan);
+                li.appendChild(editBtn);
+                li.appendChild(completeBtn);
+                li.appendChild(deleteBtn);
+
+                taskList.appendChild(li);
+            }
+        });
+   </script>
+</body>
+</html>
